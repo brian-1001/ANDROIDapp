@@ -21,6 +21,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.firstapp.R
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.text.font.FontWeight
 
 @Composable
 fun firstscreen(){
@@ -30,8 +32,10 @@ fun firstscreen(){
             .padding(20.dp)
     ) {
         Text(text="welcome to my app",
-            fontSize = 32.sp,
-            color = Color.Blue
+            fontSize = 52.sp,
+            color = Color.Blue,
+            fontFamily = FontFamily.Cursive,
+            fontWeight = FontWeight.Bold
             )
         Spacer(modifier = Modifier.height(24.dp))
         Image(

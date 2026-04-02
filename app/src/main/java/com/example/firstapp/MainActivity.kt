@@ -19,7 +19,9 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.sp
+import com.example.firstapp.screens.demo.BoxScreen
 import com.example.firstapp.screens.demo.firstscreen
+import com.example.firstapp.screens.login.LoginScreen
 import com.example.firstapp.ui.theme.FirstappTheme
 
 class MainActivity : ComponentActivity() {
@@ -59,5 +61,5 @@ fun demo(){
 @Preview(showBackground = true)
 @Composable
 fun demopreview(){
-    firstscreen()
+    LoginScreen()
 }
