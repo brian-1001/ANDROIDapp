@@ -1,5 +1,4 @@
 package com.example.firstapp.screens.demo
-
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -20,12 +19,15 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.firstapp.R
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.rememberNavController
+import com.example.firstapp.navigation.ROUTE_LOGIN
+import com.example.firstapp.navigation.ROUTE_REGISTER
 
 @Composable
-fun firstscreen(){
+fun FirstScreen(navController: NavHostController){
     Column(
         modifier = Modifier.fillMaxSize()
             .background(Color.LightGray)
@@ -39,7 +41,7 @@ fun firstscreen(){
             )
         Spacer(modifier = Modifier.height(24.dp))
         Image(
-            painter = painterResource(id=R.drawable.smoothtech),
+            painter = painterResource(id= R.drawable.flower),
             contentDescription = "company logo",
             modifier = Modifier.height(400.dp)
                 .fillMaxWidth()
@@ -50,10 +52,14 @@ fun firstscreen(){
             modifier = Modifier.fillMaxWidth(),
             horizontalArrangement =Arrangement.SpaceEvenly
         ){
-            Button(onClick = {}) {
+            Button(onClick = {
+                navController.navigate(ROUTE_LOGIN)
+            }) {
                 Text("LOGIN")
             }
-            Button(onClick = {}) {
+            Button(onClick = {
+                navController.navigate(ROUTE_REGISTER)
+            }) {
                 Text("REGISTER")
             }
         }
@@ -62,6 +68,6 @@ fun firstscreen(){
 }
 @Preview(showBackground = true)
 @Composable
-fun firstscreenpreview(){
-    firstscreen()
+fun FirstScreenPreview(){
+    FirstScreen(rememberNavController())
 }

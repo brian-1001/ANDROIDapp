@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "350217043127",
+    "project_id": "chromeapp-f4d65",
+    "storage_bucket": "chromeapp-f4d65.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:350217043127:android:2ed6ec6aa84c01d3f26132",
+        "android_client_info": {
+          "package_name": "com.example.firstapp"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBJz1XGW9RCgFEWtjKgTUq9HggBsNQgUxc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
