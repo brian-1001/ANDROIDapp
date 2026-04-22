@@ -9,7 +9,8 @@ import androidx.navigation.compose.rememberNavController
 import com.example.firstapp.screens.dashboard.DashboardScreen
 import com.example.firstapp.screens.demo.FirstScreen
 import com.example.firstapp.screens.login.LoginScreen
-import com.example.firstapp.screens.products.AddproductScreen
+import com.example.firstapp.screens.products.AddProductScreen
+import com.example.firstapp.screens.products.ProductListScreen
 import com.example.firstapp.screens.register.RegisterScreen
 import com.example.firstapp.screens.splashscreens.SplashScreen
 
@@ -39,8 +40,11 @@ fun AppNavHost(
         composable(ROUTE_FIRSTSCREEN) {
             FirstScreen(navController)
         }
+        composable(ROUTE_PRODUCTLIST) {
+            ProductListScreen(navController)
+        }
         composable(ROUTE_ADDPRODUCTS) {
-            AddproductScreen()
+            AddProductScreen(navController)
         }
     }
 }

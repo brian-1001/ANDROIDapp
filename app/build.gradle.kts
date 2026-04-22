@@ -60,4 +60,12 @@ dependencies {
     debugImplementation(libs.androidx.compose.ui.test.manifest)
     //
     implementation("androidx.navigation:navigation-compose:2.9.7")
+    //COIL
+    implementation("io.coil-kt:coil-compose:2.4.0")
+    implementation("com.squareup.retrofit2:retrofit:2.11.0")
+    implementation("com.squareup.retrofit2:converter-gson:2.11.0")
+    implementation("com.squareup.okhttp3:logging-interceptor:4.12.0")
+    //cloudinary
+    implementation("com.cloudinary:cloudinary-android:2.3.1")
+
 }

@@ -32,6 +32,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.material3.Button
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -43,6 +44,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.example.firstapp.data.AuthViewModel
 import com.example.firstapp.navigation.ROUTE_ADDPRODUCTS
+import com.example.firstapp.navigation.ROUTE_PRODUCTLIST
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -128,15 +130,16 @@ fun DashboardScreen(navController: NavHostController){
                 .fillMaxSize()
         ) {
             Text("Welcome to my app")
-          
+
             var username by remember { mutableStateOf("Loading...") }
             LaunchedEffect(Unit) {
                 myauth.getCurrentUserName {
                     username = it
                 }
             }
+
             Text(text = "Welcome, $username ")
-            //cards
+
             Card(
                 modifier = Modifier
                     .width(200.dp)
@@ -163,6 +166,11 @@ fun DashboardScreen(navController: NavHostController){
                         contentDescription = "icon"
                     )
                 }
+            }
+
+            // FIXED (moved inside Column + proper Button content)
+            Button(onClick = { navController.navigate(ROUTE_PRODUCTLIST) }) {
+                Text("Product list")
             }
         }
     }
