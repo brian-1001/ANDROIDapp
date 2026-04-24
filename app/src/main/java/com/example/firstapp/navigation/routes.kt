@@ -9,3 +9,5 @@ const val ROUTE_ADDPRODUCTS="addproducts"
 const val ROUTE_PRODUCTLIST="productlist"
 const val ROUTE_UPDATE_PRODUCT = "update_product"
 const val ROUTE_PROFILE = "profile"
+const val  ROUTE_SETTINGS = "settings"
+

@@ -52,6 +52,7 @@ import com.example.firstapp.data.AuthViewModel
 import com.example.firstapp.navigation.ROUTE_ADDPRODUCTS
 import com.example.firstapp.navigation.ROUTE_PRODUCTLIST
 import com.example.firstapp.navigation.ROUTE_PROFILE
+import com.example.firstapp.navigation.ROUTE_SETTINGS
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -68,7 +69,7 @@ fun DashboardScreen(navController: NavHostController){
                     titleContentColor = Color.Blue,
                 ),
                 actions = {
-                    IconButton(onClick = {}) {
+                    IconButton(onClick = { navController.navigate(ROUTE_SETTINGS) }) {
                         Icon(
                             Icons.Default.Settings,
                             contentDescription = "settings icon"
@@ -116,7 +117,7 @@ fun DashboardScreen(navController: NavHostController){
 
                     NavigationBarItem(
                         selected = false,
-                        onClick = {},
+                        onClick = { navController.navigate(ROUTE_SETTINGS) },
                         icon = {
                             Icon(
                                 Icons.Default.Settings,

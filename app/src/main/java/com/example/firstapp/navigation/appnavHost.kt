@@ -16,6 +16,7 @@ import com.example.firstapp.screens.products.ProductListScreen
 import com.example.firstapp.screens.products.UpdateProductScreen
 import com.example.firstapp.screens.profile.ProfileScreen
 import com.example.firstapp.screens.register.RegisterScreen
+import com.example.firstapp.screens.settings.SettingsScreen
 import com.example.firstapp.screens.splashscreens.SplashScreen
 
 @Composable
@@ -60,5 +61,9 @@ fun AppNavHost(
         composable(ROUTE_PROFILE) {
             ProfileScreen(navController)
         }
-    }
+        composable (ROUTE_SETTINGS) {
+            SettingsScreen(navController)
+        }
+
+        }
 }
