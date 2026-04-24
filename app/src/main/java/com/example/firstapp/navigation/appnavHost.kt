@@ -3,14 +3,18 @@ package com.example.firstapp.navigation
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navArgument
 import com.example.firstapp.screens.dashboard.DashboardScreen
 import com.example.firstapp.screens.demo.FirstScreen
 import com.example.firstapp.screens.login.LoginScreen
 import com.example.firstapp.screens.products.AddProductScreen
 import com.example.firstapp.screens.products.ProductListScreen
+import com.example.firstapp.screens.products.UpdateProductScreen
+import com.example.firstapp.screens.profile.ProfileScreen
 import com.example.firstapp.screens.register.RegisterScreen
 import com.example.firstapp.screens.splashscreens.SplashScreen
 
@@ -45,6 +49,16 @@ fun AppNavHost(
         }
         composable(ROUTE_ADDPRODUCTS) {
             AddProductScreen(navController)
+        }
+        composable(
+            route = ROUTE_UPDATE_PRODUCT + "/{id}",
+            arguments = listOf(navArgument("id") { type = NavType.StringType })
+        ) { backStackEntry ->
+            val id = backStackEntry.arguments?.getString("id") ?: ""
+            UpdateProductScreen(navController, id)
+        }
+        composable(ROUTE_PROFILE) {
+            ProfileScreen(navController)
         }
     }
 }

@@ -134,4 +134,53 @@ class ProductViewModel(
 
         return products
     }
+
+    fun deleteProduct(productId: String) {
+        databaseReference.child(productId).removeValue().addOnCompleteListener {
+            if (it.isSuccessful) {
+                Toast.makeText(context, "Product deleted", Toast.LENGTH_SHORT).show()
+            } else {
+                Toast.makeText(context, "Error deleting product", Toast.LENGTH_SHORT).show()
+            }
+        }
+    }
+
+    fun updateProduct(
+        productId: String,
+        name: String,
+        price: String,
+        description: String,
+        imageUri: Uri?,
+        currentImageUrl: String
+    ) {
+        CoroutineScope(Dispatchers.IO).launch {
+            try {
+                val imageUrl = if (imageUri != null) {
+                    uploadToCloudinary(context, imageUri)
+                } else {
+                    currentImageUrl
+                }
+
+                val updateData = mapOf(
+                    "name" to name,
+                    "price" to price,
+                    "description" to description,
+                    "imageUrl" to imageUrl
+                )
+
+                databaseReference.child(productId).updateChildren(updateData).addOnCompleteListener {
+                    if (it.isSuccessful) {
+                        Toast.makeText(context, "Product updated", Toast.LENGTH_SHORT).show()
+                        navController.navigate(ROUTE_PRODUCTLIST)
+                    } else {
+                        Toast.makeText(context, "Error updating product", Toast.LENGTH_SHORT).show()
+                    }
+                }
+            } catch (e: Exception) {
+                CoroutineScope(Dispatchers.Main).launch {
+                    Toast.makeText(context, "Update failed: ${e.message}", Toast.LENGTH_SHORT).show()
+                }
+            }
+        }
+    }
 }

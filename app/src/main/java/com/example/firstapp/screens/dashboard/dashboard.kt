@@ -1,17 +1,24 @@
 package com.example.firstapp.screens.dashboard
 
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.ExitToApp
 import androidx.compose.material.icons.filled.Home
+import androidx.compose.material.icons.filled.List
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material3.BottomAppBar
@@ -32,7 +39,6 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
-import androidx.compose.material3.Button
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -45,6 +51,7 @@ import androidx.navigation.compose.rememberNavController
 import com.example.firstapp.data.AuthViewModel
 import com.example.firstapp.navigation.ROUTE_ADDPRODUCTS
 import com.example.firstapp.navigation.ROUTE_PRODUCTLIST
+import com.example.firstapp.navigation.ROUTE_PROFILE
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -64,13 +71,13 @@ fun DashboardScreen(navController: NavHostController){
                     IconButton(onClick = {}) {
                         Icon(
                             Icons.Default.Settings,
-                            contentDescription = "add icon"
+                            contentDescription = "settings icon"
                         )
                     }
-                    IconButton(onClick = { myauth.signout() }) {
+                    IconButton(onClick = { myauth.logout() }) {
                         Icon(
                             Icons.Default.ExitToApp,
-                            contentDescription = "add icon"
+                            contentDescription = "logout icon"
                         )
                     }
                 }
@@ -96,8 +103,8 @@ fun DashboardScreen(navController: NavHostController){
                     )
 
                     NavigationBarItem(
-                        selected = true,
-                        onClick = {},
+                        selected = false,
+                        onClick = { navController.navigate(ROUTE_PROFILE) },
                         icon = {
                             Icon(
                                 Icons.Default.Person,
@@ -108,7 +115,7 @@ fun DashboardScreen(navController: NavHostController){
                     )
 
                     NavigationBarItem(
-                        selected = true,
+                        selected = false,
                         onClick = {},
                         icon = {
                             Icon(
@@ -128,8 +135,9 @@ fun DashboardScreen(navController: NavHostController){
             modifier = Modifier
                 .padding(innerPadding)
                 .fillMaxSize()
+                .verticalScroll(rememberScrollState())
         ) {
-            Text("Welcome to my app")
+            Text("Welcome to my app", modifier = Modifier.padding(16.dp))
 
             var username by remember { mutableStateOf("Loading...") }
             LaunchedEffect(Unit) {
@@ -138,46 +146,108 @@ fun DashboardScreen(navController: NavHostController){
                 }
             }
 
-            Text(text = "Welcome, $username ")
-
-            Card(
+            Text(text = "Welcome, $username ", modifier = Modifier.padding(horizontal = 16.dp))
+            
+            Row(
                 modifier = Modifier
-                    .width(200.dp)
-                    .padding(16.dp)
-                    .height(150.dp)
-                    .clickable {
-                        navController.navigate(ROUTE_ADDPRODUCTS)
-                    },
-                shape = RoundedCornerShape(16.dp),
-                elevation = CardDefaults.cardElevation(8.dp),
-                colors = CardDefaults.cardColors(
-                    containerColor = Color.Gray,
-                    contentColor = Color.White
-                )
+                    .fillMaxWidth()
+                    .horizontalScroll(rememberScrollState())
+                    .padding(16.dp),
+                horizontalArrangement = Arrangement.spacedBy(16.dp)
             ) {
-                Column(
-                    modifier = Modifier.fillMaxSize(),
-                    horizontalAlignment = Alignment.CenterHorizontally,
-                    verticalArrangement = Arrangement.Center
-                ) {
-                    Text("HELLO", color = Color.Blue, fontSize = 24.sp)
-                    Icon(
-                        imageVector = Icons.Default.Add,
-                        contentDescription = "icon"
+                // Card 1: Add Product
+                Card(
+                    modifier = Modifier
+                        .width(200.dp)
+                        .height(150.dp)
+                        .clickable {
+                        navController.navigate(ROUTE_ADDPRODUCTS)
+                        },
+                    shape = RoundedCornerShape(16.dp),
+                    elevation = CardDefaults.cardElevation(8.dp),
+                    colors = CardDefaults.cardColors(
+                        containerColor = Color.Gray,
+                        contentColor = Color.White
                     )
+                ) {
+                    Column(
+                        modifier = Modifier.fillMaxSize(),
+                        horizontalAlignment = Alignment.CenterHorizontally,
+                        verticalArrangement = Arrangement.Center
+                    ) {
+                        Text("add product", color = Color.Blue, fontSize = 24.sp)
+                        Icon(
+                            imageVector = Icons.Default.Add,
+                            contentDescription = "icon",
+                            modifier = Modifier.size(40.dp)
+                        )
+                    }
                 }
-            }
 
-            // FIXED (moved inside Column + proper Button content)
-            Button(onClick = { navController.navigate(ROUTE_PRODUCTLIST) }) {
-                Text("Product list")
+                // Card 2: Product List
+                Card(
+                    modifier = Modifier
+                        .width(200.dp)
+                        .height(150.dp)
+                        .clickable {
+                            navController.navigate(ROUTE_PRODUCTLIST)
+                        },
+                    shape = RoundedCornerShape(16.dp),
+                    elevation = CardDefaults.cardElevation(8.dp),
+                    colors = CardDefaults.cardColors(
+                        containerColor = Color.Gray,
+                        contentColor = Color.White
+                    )
+                ) {
+                    Column(
+                        modifier = Modifier.fillMaxSize(),
+                        horizontalAlignment = Alignment.CenterHorizontally,
+                        verticalArrangement = Arrangement.Center
+                    ) {
+                        Text("product list", color = Color.Blue, fontSize = 24.sp)
+                        Icon(
+                            imageVector = Icons.Default.List,
+                            contentDescription = "icon",
+                            modifier = Modifier.size(40.dp)
+                        )
+                    }
+                }
+
+                // Card 3: My Profile
+                Card(
+                    modifier = Modifier
+                        .width(200.dp)
+                        .height(150.dp)
+                        .clickable {
+                            navController.navigate(ROUTE_PROFILE)
+                        },
+                    shape = RoundedCornerShape(16.dp),
+                    elevation = CardDefaults.cardElevation(8.dp),
+                    colors = CardDefaults.cardColors(
+                        containerColor = Color.Gray,
+                        contentColor = Color.White
+                    )
+                ) {
+                    Column(
+                        modifier = Modifier.fillMaxSize(),
+                        horizontalAlignment = Alignment.CenterHorizontally,
+                        verticalArrangement = Arrangement.Center
+                    ) {
+                        Text("my profile", color = Color.Blue, fontSize = 24.sp)
+                        Icon(
+                            imageVector = Icons.Default.Person,
+                            contentDescription = "icon",
+                            modifier = Modifier.size(40.dp)
+                        )
+                    }
+                }
             }
         }
     }
 }
 
-@Preview
+@Preview(showBackground = true, widthDp = 700)
 @Composable
-fun dashboardpeview(){
+fun DashboardPreview(){
     DashboardScreen(rememberNavController())
 }

@@ -13,8 +13,6 @@ import com.google.firebase.database.ValueEventListener
 
 class AuthViewModel(var navController: NavHostController, var context: Context) {
 
-    // Use lazy initialization for FirebaseAuth to avoid issues during Composable Previews.
-    // This prevents the app from trying to initialize Firebase when the ViewModel is created in a Preview.
     private val mAuth: FirebaseAuth by lazy { FirebaseAuth.getInstance() }
 
     fun signup(name: String, email: String, pass: String, confpass: String) {
@@ -33,7 +31,9 @@ class AuthViewModel(var navController: NavHostController, var context: Context) 
                 val currentUser = mAuth.currentUser
                 val userId = currentUser?.uid
                 val userData = User(name, email, userId ?: "")
-                val reference = FirebaseDatabase.getInstance().getReference().child("Users").child(userId!!)
+                val reference = FirebaseDatabase.getInstance().getReference()
+                    .child("Users").child(userId!!)
+
                 reference.setValue(userData).addOnCompleteListener { task2 ->
                     if (task2.isSuccessful) {
                         Toast.makeText(context, "Registration successful", Toast.LENGTH_SHORT).show()
@@ -64,31 +64,13 @@ class AuthViewModel(var navController: NavHostController, var context: Context) 
         }
     }
 
-    fun logout() {
-        mAuth.signOut()
-        navController.navigate(ROUTE_LOGIN)
-    }
-
-    fun isLoggedin(): Boolean {
-        return mAuth.currentUser != null
-    }
-    //signout function
-    fun signout() {
-        mAuth.signOut()
-        navController.navigate(ROUTE_LOGIN){
-            popUpTo(id = 0)
-        }
-
-        //get current user
-        val currentUser = mAuth.currentUser
-
-    }
-
     fun getCurrentUserName(callback: (String) -> Unit) {
         val currentUser = mAuth.currentUser
         val userId = currentUser?.uid
         if (userId != null) {
-            val reference = FirebaseDatabase.getInstance().getReference().child("Users").child(userId)
+            val reference = FirebaseDatabase.getInstance().getReference()
+                .child("Users").child(userId)
+
             reference.addValueEventListener(object : ValueEventListener {
                 override fun onDataChange(snapshot: DataSnapshot) {
                     val user = snapshot.getValue(User::class.java)
@@ -102,6 +84,33 @@ class AuthViewModel(var navController: NavHostController, var context: Context) 
         } else {
             callback("Not Logged In")
         }
+    }
+
+    fun getUserData(onResult: (User?) -> Unit) {
+        val userid = mAuth.currentUser?.uid
+
+        if (userid != null) {
+            val reference = FirebaseDatabase.getInstance()
+                .getReference("Users/$userid")
+
+            reference.get().addOnSuccessListener { snapshot ->
+                val user = snapshot.getValue(User::class.java)
+                onResult(user)
+            }.addOnFailureListener {
+                onResult(null)
+            }
+        } else {
+            onResult(null)
+        }
+    }
+
+    fun logout() {
+        mAuth.signOut()
+        navController.navigate(ROUTE_LOGIN)
+    }
+
+    fun signout() {
+        logout()
     }
 }
 
